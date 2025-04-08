@@ -1,0 +1,81 @@
+/* Mobile Menu Animation */
+#mobile-menu { transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
+#mobile-menu.hidden { transform: translateY(-10px); opacity: 0; pointer-events: none; }
+
+/* ApexCharts Customization */
+.apexcharts-datalabel-label, .apexcharts-datalabel-value { font-size: 12px !important; }
+.apexcharts-radialbar-label { font-weight: 600; font-size: 14px !important; color: #374151; }
+.apexcharts-radialbar-value { font-size: 18px !important; font-weight: 700; color: #1f2937; }
+
+/* Custom Range Input Styles */
+input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 8px; background: #d1d5db; border-radius: 5px; outline: none; opacity: 0.7; transition: opacity .2s; }
+input[type=range]:hover { opacity: 1; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; background: #4f46e5; border-radius: 50%; cursor: pointer; }
+input[type=range]::-moz-range-thumb { width: 20px; height: 20px; background: #4f46e5; border-radius: 50%; cursor: pointer; border: none; }
+
+/* Highlighted Implementation Card (JS Interaction) */
+.highlight-card {
+    border-color: #6366f1 !important; /* Indigo-500 */
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); /* Indigo shadow */
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.03);
+}
+
+/* Dark mode highlight card */
+.dark .highlight-card {
+    border-color: #818cf8 !important; /* Indigo-400 */
+    box-shadow: 0 4px 20px rgba(129, 140, 248, 0.4); /* Indigo-400 shadow */
+}
+
+/* Implementation Card Base Styles & Hover */
+.implementation-card {
+    display: flex; flex-direction: column; justify-content: space-between;
+    min-height: 180px; /* Maintain original height */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.implementation-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Basic Button Hover/Focus */
+button, .button {
+  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+button:hover, .button:hover,
+button:focus, .button:focus {
+  transform: scale(1.05);
+  filter: brightness(95%);
+  outline: none;
+}
+
+/* Basic Link Hover/Active */
+a {
+  transition: color 0.2s ease-in-out, text-decoration-color 0.2s ease-in-out;
+  text-decoration-color: transparent;
+}
+
+a:hover, a:active {
+  color: #4f46e5; /* Tailwind indigo-600 */
+  text-decoration: underline;
+  text-decoration-color: #4f46e5;
+}
+
+/* Navigation Active Link Style (Scrollspy) */
+.nav-active {
+    /* Apply Tailwind classes directly in HTML for these now */
+    /* Example (needs Tailwind): font-semibold bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 */
+    /* This class is now just a marker for JS */
+}
+
+/* Details/Summary Chevron Animation */
+details summary .lucide-chevron {
+  transition: transform 0.2s ease-in-out;
+  vertical-align: middle;
+}
+details[open] summary .lucide-chevron {
+  transform: rotate(90deg);
+} 

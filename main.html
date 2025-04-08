@@ -22,7 +22,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/utilities.css">
+    <link rel="stylesheet" href="css/components.css">
 </head>
 <body class="bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-200 antialiased">
 
@@ -33,12 +35,12 @@
                     <span class="lucide text-indigo-600 dark:text-indigo-400" style="font-size: 1.25rem;">&#xe9c1;</span> <span class="font-bold text-lg ml-2 text-gray-900 dark:text-white">Investment Plan</span>
                 </div>
                 <div class="hidden md:flex md:items-center md:space-x-8">
-                    <a href="#overview" class="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium">Overview</a>
-                    <a href="#core-portfolio" class="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium">Core Portfolio</a>
-                    <a href="#china-satellite" class="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium">China Satellite</a>
-                    <a href="#tax" class="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium">Tax (Germany)</a>
-                    <a href="#implementation" class="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium">Implementation</a>
-                    <a href="#long-term" class="text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium">Long-Term View</a>
+                    <a href="#overview" class="px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">Overview</a>
+                    <a href="#core-portfolio" class="px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">Core Portfolio</a>
+                    <a href="#china-satellite" class="px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">China Satellite</a>
+                    <a href="#tax" class="px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">Tax (Germany)</a>
+                    <a href="#implementation" class="px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">Implementation</a>
+                    <a href="#long-term" class="px-3 py-2 rounded-md text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400">Long-Term View</a>
                      <button id="darkModeToggleDesktop" aria-label="Toggle Dark Mode" class="ml-4 p-2 rounded-md text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                          <span class="lucide block sun-icon" style="font-size: 1.1rem;">&#xea37;</span> <span class="lucide hidden moon-icon" style="font-size: 1.1rem;">&#xe9b6;</span> </button>
                 </div>
@@ -51,12 +53,12 @@
         </div>
         <div class="md:hidden hidden absolute w-full bg-white dark:bg-gray-800 shadow-lg border-t border-gray-200 dark:border-gray-700" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#overview" class="text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-700 dark:hover:text-indigo-400 block px-3 py-2 rounded-md text-base font-medium">Overview</a>
-                <a href="#core-portfolio" class="text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-700 dark:hover:text-indigo-400 block px-3 py-2 rounded-md text-base font-medium">Core Portfolio</a>
-                <a href="#china-satellite" class="text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-700 dark:hover:text-indigo-400 block px-3 py-2 rounded-md text-base font-medium">China Satellite</a>
-                <a href="#tax" class="text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-700 dark:hover:text-indigo-400 block px-3 py-2 rounded-md text-base font-medium">Tax (Germany)</a>
-                <a href="#implementation" class="text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-700 dark:hover:text-indigo-400 block px-3 py-2 rounded-md text-base font-medium">Implementation</a>
-                <a href="#long-term" class="text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-700 dark:hover:text-indigo-400 block px-3 py-2 rounded-md text-base font-medium">Long-Term View</a>
+                <a href="#overview" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-700 dark:hover:text-indigo-400">Overview</a>
+                <a href="#core-portfolio" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-700 dark:hover:text-indigo-400">Core Portfolio</a>
+                <a href="#china-satellite" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-700 dark:hover:text-indigo-400">China Satellite</a>
+                <a href="#tax" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-700 dark:hover:text-indigo-400">Tax (Germany)</a>
+                <a href="#implementation" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-700 dark:hover:text-indigo-400">Implementation</a>
+                <a href="#long-term" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-700 dark:hover:text-indigo-400">Long-Term View</a>
                 <button id="darkModeToggleMobile" aria-label="Toggle Dark Mode" class="w-full text-left text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-gray-700 hover:text-indigo-700 dark:hover:text-indigo-400 flex items-center px-3 py-2 rounded-md text-base font-medium mt-2">
                    <span class="lucide mr-2 sun-icon" style="font-size: 1.1rem;">&#xea37;</span> <span class="lucide mr-2 hidden moon-icon" style="font-size: 1.1rem;">&#xe9b6;</span> Toggle Theme
                 </button>
@@ -159,8 +161,7 @@
                       </div>
                  </div>
              </div>
-             
-             <!-- Added Broker Choice Section -->
+
              <div class="mt-8 p-4 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700/50 rounded-lg" data-aos="fade-up">
                  <h4 class="font-semibold text-lg text-blue-800 dark:text-blue-300 mb-3 flex items-center">
                      <span class="lucide mr-2" style="font-size: 1.1rem;">&#xea4c;</span> Choosing Your Broker
@@ -175,12 +176,10 @@
                  </ul>
                  <p class="text-xs text-blue-600 dark:text-blue-500 mt-3">Popular brokers in Germany include names like Scalable Capital, Trade Republic, ING, Consorsbank, and others. Compare their current conditions and features.</p>
              </div>
-             <!-- End Added Broker Choice Section -->
 
               <p class="text-sm text-gray-600 dark:text-gray-400 mt-6" data-aos="fade-up">Use a broker offering Sparpläne (savings plans) for automated monthly investments, often available for ETFs and major stocks (e.g., Scalable Capital, Trade Republic in Germany).</p>
          </section>
 
-         <!-- Added Tracking Your Portfolio Section -->
          <section id="tracking" class="mb-16 scroll-mt-16" data-aos="fade-up">
             <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-6 border-b pb-2 border-gray-300 dark:border-gray-600">Tracking Your Portfolio</h2>
             <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700">
@@ -201,14 +200,12 @@
                 </div>
             </div>
          </section>
-         <!-- End Tracking Your Portfolio Section -->
 
          <section id="long-term" class="mb-16 scroll-mt-16" data-aos="fade-up">
              <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-6 border-b pb-2 border-gray-300 dark:border-gray-600">Long-Term View & Discipline</h2>
              <div class="bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/30 dark:to-cyan-900/30 p-8 rounded-lg shadow dark:shadow-gray-700"> <div class="grid md:grid-cols-2 gap-8"> <div> <h3 class="text-xl font-semibold mb-3 text-teal-700 dark:text-teal-400 flex items-center"><span class="lucide mr-2" style="font-size: 1.25rem;">&#xe907;</span> Compounding & Consistency</h3> <p class="text-gray-700 dark:text-gray-300 mb-4">Consistent €600 monthly investments (dollar-cost averaging) combined with long-term compounding of reinvested earnings drives potential portfolio growth. Staying invested through market cycles is key.</p> </div> <div> <h3 class="text-xl font-semibold mb-3 text-cyan-700 dark:text-cyan-400 flex items-center"><span class="lucide mr-2" style="font-size: 1.25rem;">&#xea0c;</span> 5-Year Review & Rebalancing</h3> <p class="text-gray-700 dark:text-gray-300 mb-4">Review your plan around the 5-year mark:</p> <ul class="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300 text-sm"> <li>Assess risk tolerance & goals.</li> <li>Rebalance if allocations drift significantly.</li> <li>Check fund competitiveness (fees, etc.).</li> <li>Adjust for major life/economic shifts.</li> </ul> <p class="text-gray-700 dark:text-gray-300 mt-4 text-sm">Regular rebalancing maintains your risk profile.</p> </div> </div> </div>
          </section>
 
-         <!-- Added Revision History Section -->
          <section id="revision-history" class="mb-8 scroll-mt-16" data-aos="fade-up">
             <details class="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm">
                 <summary class="px-4 py-3 cursor-pointer text-sm font-semibold text-gray-700 dark:text-gray-300 flex justify-between items-center">
@@ -223,7 +220,6 @@
                 </div>
             </details>
          </section>
-         <!-- End Revision History Section -->
 
          <footer class="text-center mt-12 pt-8 border-t border-gray-300 dark:border-gray-700" data-aos="fade-up">
              <p class="text-sm text-gray-500 dark:text-gray-400">&copy; <span id="currentYear"></span> Investment Plan Overview. Information purposes only.</p>
@@ -233,7 +229,7 @@
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="js/main.js" defer></script>
+    <script type="module" src="js/app.js"></script>
 
 </body>
 </html>

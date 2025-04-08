@@ -1,0 +1,22 @@
+@font-face {
+  font-family: 'LucideIcons';
+  src: url(https://unpkg.com/lucide-static@latest/font/Lucide.ttf) format('truetype');
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Ensure elements are hidden initially for AOS */
+[data-aos] {
+   opacity: 0;
+   transition-property: transform, opacity;
+ }
+
+/* Dark mode root styles (applied by JS) */
+/* Add any base dark mode adjustments if needed, though Tailwind handles most */ 

@@ -1,0 +1,17 @@
+.lucide {
+  font-family: 'LucideIcons';
+  font-size: 1.1rem; line-height: 1; vertical-align: middle;
+  margin-right: 0.35rem; display: inline-block; color: inherit;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.lucide-link { font-size: 0.9rem; margin-left: 0.15rem; color: #6b7280; }
+.lucide-card-icon { font-size: 1.25rem; margin-right: 0.5rem; color: #4f46e5; }
+.lucide-card-icon.rose { color: #be123c; }
+.lucide-opps { color: #15803d; }
+.lucide-risks { color: #b91c1c; } 
