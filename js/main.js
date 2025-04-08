@@ -28,67 +28,9 @@ mobileMenuLinks.forEach(link => {
   });
 });
 
-// --- Chart Configurations ---
-// Overview Dashboard Gauges
-const monthlyInvestmentGaugeOptions = {
-  chart: { height: '100%', type: 'radialBar', toolbar: { show: false }, sparkline: { enabled: true } },
-  series: [100],
-  colors: ["#4f46e5"],
-  plotOptions: {
-    radialBar: {
-      startAngle: -90,
-      endAngle: 90,
-      track: { background: "#e0e7ff", strokeWidth: '97%', margin: 5, },
-      dataLabels: {
-        name: { show: true, offsetY: -5, fontSize: '14px', fontWeight: 700, color: '#1f2937' },
-        value: { offsetY: -30, fontSize: '12px', color: '#4b5563', formatter: function (val) { return "per month"; } }
-      }
-    }
-  },
-  grid: { padding: { top: -10 } },
-  fill: { type: 'solid' },
-  labels: ['€600'],
-  tooltip: { enabled: true, y: { formatter: function(value) { return "Total monthly contribution: €600"; } }, theme: 'dark' }
-};
-const monthlyGauge = new ApexCharts(document.querySelector("#monthlyInvestmentGauge"), monthlyInvestmentGaugeOptions);
-monthlyGauge.render();
-const splitGaugeOptions = {
-  chart: { height: '100%', type: 'radialBar', toolbar: { show: false }, sparkline: { enabled: true } },
-  series: [83],
-  colors: ["#8b5cf6"],
-  plotOptions: {
-    radialBar: {
-      startAngle: -90,
-      endAngle: 90,
-      track: { background: "#ede9fe", strokeWidth: '97%', margin: 5, },
-      dataLabels: {
-        name: { show: true, offsetY: -5, fontSize: '14px', fontWeight: 700, color: '#1f2937' },
-        value: { offsetY: -30, fontSize: '12px', color: '#4b5563', formatter: function (val) { return "Satellite: 17%"; } }
-      }
-    }
-  },
-  grid: { padding: { top: -10 } },
-  fill: { type: 'solid' },
-  labels: ['83% Core'],
-  tooltip: {
-    enabled: true,
-    y: {
-      formatter: function(value) {
-        const coreAmount = (value / 100 * 600).toFixed(0);
-        const satellitePercent = (100 - value).toFixed(0);
-        const satelliteAmount = ((100 - value) / 100 * 600).toFixed(0);
-        return `Core: €${coreAmount}/mo (${value}%)<br>Satellite: €${satelliteAmount}/mo (${satellitePercent}%)`;
-      }
-    },
-    theme: 'dark'
-  }
-};
-const splitGauge = new ApexCharts(document.querySelector("#splitGauge"), splitGaugeOptions);
-splitGauge.render();
-
 // Core Allocation Chart (Donut)
 const coreAllocationOptions = {
-  chart: { type: 'donut', height: 350, fontFamily: 'Inter, sans-serif', toolbar: { show: false }, events: { dataPointMouseEnter: function(event, chartContext, config) { highlightImplementationCard(config.seriesIndex, true); }, dataPointMouseLeave: function(event, chartContext, config) { highlightImplementationCard(config.seriesIndex, false); } } },
+  chart: { type: 'donut', height: 350, fontFamily: 'Inter, sans-serif', toolbar: { show: false }, events: { dataPointSelection: function(event, chartContext, config) { clearCoreHighlights(); highlightImplementationCard(config.dataPointIndex, true); } } },
   series: [60, 20, 20],
   labels: ['Global Developed ETF (€300)', 'Europe ETF (€100)', 'Emerging Markets ETF (€100)'],
   colors: ['#4f46e5', '#6366f1', '#818cf8'],
@@ -211,6 +153,16 @@ rateValueSpan.textContent = `${parseFloat(inputRate.value).toFixed(1)}%`;
 
 // --- Implementation Card Highlighting Logic ---
 const implementationCardMap = { 0: 'impl-card-global', 1: 'impl-card-europe', 2: 'impl-card-em' };
+const coreRationaleDisplay = document.getElementById('core-rationale-display');
+const allImplementationCards = document.querySelectorAll('.implementation-card');
+
+// Store rationale texts corresponding to series index
+const coreRationales = {
+    0: "Broad global diversification across developed markets. Low cost and accumulating strategy captures long-term growth.", // Global Dev
+    1: "Targeted exposure to established European economies. Offers diversification and potential valuation opportunities.",   // Europe
+    2: "Access to faster-growing emerging economies. Higher potential returns, balanced by higher risk, within a diversified core.", // Emerging Markets
+};
+
 function highlightImplementationCard(seriesIndex, shouldHighlight) {
   const cardId = implementationCardMap[seriesIndex];
   if (cardId) {
@@ -223,6 +175,24 @@ function highlightImplementationCard(seriesIndex, shouldHighlight) {
       }
     }
   }
+  // Update rationale display
+  if (coreRationaleDisplay) {
+      if (shouldHighlight && coreRationales.hasOwnProperty(seriesIndex)) {
+          coreRationaleDisplay.textContent = coreRationales[seriesIndex];
+      } else {
+          // Optionally clear text when deselecting/hovering off, or leave it until next selection
+          // coreRationaleDisplay.textContent = ''; // Clear if deselecting
+      }
+  }
+}
+
+function clearCoreHighlights() {
+    allImplementationCards.forEach(card => card.classList.remove('highlight-card'));
+    if (coreRationaleDisplay) {
+        coreRationaleDisplay.textContent = '';
+    }
+    // Deselect chart slice if possible (ApexCharts API might be needed)
+    // For now, just clear UI elements.
 }
 
 // --- Sparer-Pauschbetrag Calculator Logic ---
@@ -249,61 +219,50 @@ const moonIcons = document.querySelectorAll('.moon-icon');
 
 // Function to update theme based on preference
 function applyTheme(isDark) {
-  if (isDark) {
-    htmlElement.classList.add('dark');
-    sunIcons.forEach(icon => icon.classList.add('hidden'));
-    moonIcons.forEach(icon => icon.classList.remove('hidden'));
-    localStorage.setItem('theme', 'dark');
-  } else {
-    htmlElement.classList.remove('dark');
-    sunIcons.forEach(icon => icon.classList.remove('hidden'));
-    moonIcons.forEach(icon => icon.classList.add('hidden'));
-    localStorage.setItem('theme', 'light');
-  }
-  // Re-render charts with potentially different theme options
-  updateChartThemes(isDark);
+  // Apply class to HTML element for Tailwind CSS `dark:` variants
+  htmlElement.classList.toggle('dark', isDark);
+
+  // Update toggle button icons
+  sunIcons.forEach(icon => icon.classList.toggle('hidden', isDark));
+  moonIcons.forEach(icon => icon.classList.toggle('hidden', !isDark));
+
+  // Store preference
+  localStorage.setItem('theme', isDark ? 'dark' : 'light');
+
+  // Update chart themes if charts are initialized
+  if (typeof coreChart !== 'undefined' && coreChart !== null) { // Check if charts exist
+       updateChartThemes(isDark);
+   }
 }
 
-// Function to update chart themes
+// Function to update chart themes more reliably
 function updateChartThemes(isDark) {
-  const labelColor = isDark ? '#9ca3af' : '#6b7280';
+  const themeMode = isDark ? 'dark' : 'light';
+  const labelColor = isDark ? '#9ca3af' : '#6b7280'; // Keep specific label colors if needed
   const titleColor = isDark ? '#e5e7eb' : '#374151';
   const valueColor = isDark ? '#f3f4f6' : '#1f2937';
   const gridColor = isDark ? '#374151' : '#e5e7eb';
+  // Removed gauge track colors as gauges are removed
+  // const gaugeTrackLight = '#e0e7ff';
+  // const gaugeTrackDark = '#374151';
+  // const splitGaugeTrackLight = '#ede9fe';
+  // const splitGaugeTrackDark = '#4b5563';
 
-  // Update Gauge Colors (Example for monthly gauge, apply similarly to splitGauge if needed)
-  monthlyGauge.updateOptions({
-    plotOptions: {
-      radialBar: {
-        track: { background: isDark ? '#374151' : '#e0e7ff' },
-        dataLabels: {
-          name: { color: valueColor },
-          value: { color: labelColor }
-        }
-      }
+  // Update Gauge Colors - REMOVED
+  // monthlyGauge?.updateOptions({ ... });
+  // splitGauge?.updateOptions({ ... });
+
+  // Update Core Chart Theme
+  coreChart?.updateOptions({
+    chart: { background: 'transparent' },
+    theme: { mode: themeMode },
+    legend: {
+        labels: { colors: isDark ? '#d1d5db' : undefined } // Keep explicit legend override
     },
-    tooltip: { theme: isDark ? 'dark' : 'light' }
-  });
-  splitGauge.updateOptions({
-    plotOptions: {
-       radialBar: {
-         track: { background: isDark ? '#4b5563' : '#ede9fe' },
-         dataLabels: {
-           name: { color: valueColor },
-           value: { color: labelColor }
-         }
-       }
-     },
-    tooltip: { theme: isDark ? 'dark' : 'light' }
-  })
-
-  // Update Core Allocation Chart
-  coreChart.updateOptions({
-    legend: { labels: { colors: isDark ? ['#d1d5db'] : undefined } }, // Set explicitly for dark
     plotOptions: {
       pie: {
         donut: {
-          labels: {
+          labels: { // Keep specific label overrides if theme default isn't right
             name: { color: titleColor },
             value: { color: labelColor },
             total: { color: labelColor }
@@ -311,17 +270,26 @@ function updateChartThemes(isDark) {
         }
       }
     },
-    tooltip: { theme: isDark ? 'dark' : 'light' }
+    tooltip: { theme: themeMode }
   });
 
-  // Update Growth Chart
-  growthChart.updateOptions({
-    xaxis: { title: { style: { color: labelColor } }, labels: { style: { colors: labelColor } } },
-    yaxis: { title: { style: { color: labelColor } }, labels: { style: { colors: labelColor } } },
-    grid: { borderColor: gridColor },
-    tooltip: { theme: isDark ? 'dark' : 'light' }
+  // Update Growth Chart using theme.mode
+  growthChart?.updateOptions({
+    chart: { background: 'transparent' },
+    theme: { mode: themeMode },
+    xaxis: {
+        title: { style: { color: labelColor } }, // Keep overrides if needed
+        labels: { style: { colors: labelColor } }
+    },
+    yaxis: {
+        title: { style: { color: labelColor } },
+        labels: { style: { colors: labelColor } }
+    },
+    grid: { borderColor: gridColor }, // Keep explicit grid color
+    tooltip: { theme: themeMode }
   });
 }
+
 
 // Event listener for toggle buttons
 function toggleDarkMode() {
@@ -329,129 +297,235 @@ function toggleDarkMode() {
   applyTheme(!isCurrentlyDark);
 }
 
-desktopToggle.addEventListener('click', toggleDarkMode);
-mobileToggle.addEventListener('click', toggleDarkMode);
+// Attach listeners only if elements exist
+desktopToggle?.addEventListener('click', toggleDarkMode);
+mobileToggle?.addEventListener('click', toggleDarkMode);
 
-// Check local storage on initial load
-const savedTheme = localStorage.getItem('theme');
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-  applyTheme(true);
-} else {
-  applyTheme(false);
-}
-
+// --- Move all initialization logic inside DOMContentLoaded ---
 document.addEventListener('DOMContentLoaded', () => {
-    // Dark Mode Toggle
-    const themeToggleButtons = document.querySelectorAll('[id^="darkModeToggle"]');
-    // ... (keep existing dark mode logic) ...
+    // --- Apply Initial Theme START ---
+    // Check local storage and system preference inside DOMContentLoaded
+    const savedTheme = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initialDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+    // Apply theme classes FIRST, before charts init
+     applyTheme(initialDark);
+    // --- Apply Initial Theme END ---
 
-    // Mobile Menu Toggle
-    const mobileMenuButton = document.getElementById('mobile-menu-button');
-    // ... (keep existing mobile menu logic) ...
 
-    // AOS Initialization
+    // Initialize AOS
     AOS.init({
-        // ... (keep existing AOS options) ...
+      once: true, duration: 600, offset: 50, delay: 0,
     });
 
-    // Charts Initialization
-    // ... (keep existing chart logic for overview, core, growth) ...
+    // Mobile Menu Toggle
+    const menuButton = document.getElementById('mobile-menu-button');
+    // ... (keep existing mobile menu logic) ...
 
-    // Tax Calculator
-    const gainsInput = document.getElementById('input-gains');
-    // ... (keep existing tax calculator logic) ...
+    // Charts Initialization (Now happens AFTER initial theme is set)
+    // Overview Dashboard Gauges - REMOVED
+    // const monthlyInvestmentGaugeOptions = { ... };
+    // const monthlyGauge = new ApexCharts(document.querySelector("#monthlyInvestmentGauge"), monthlyInvestmentGaugeOptions);
+    // monthlyGauge.render();
+    // const splitGaugeOptions = { ... };
+    // const splitGauge = new ApexCharts(document.querySelector("#splitGauge"), splitGaugeOptions);
+    // splitGauge.render();
 
-    // Growth Projection Interaction
-    const monthlyInput = document.getElementById('input-monthly');
-    // ... (keep existing growth projection logic) ...
+    // Core Allocation Chart (Donut)
+    const coreAllocationOptions = {
+        // ... existing options ...
+         chart: { /*...,*/ background: 'transparent' },
+         theme: { mode: initialDark ? 'dark' : 'light' }, // Set initial theme object
+         legend: { labels: { colors: initialDark ? ['#d1d5db'] : undefined } },
+         tooltip: { theme: initialDark ? 'dark' : 'light' },
+         plotOptions: {
+             pie: {
+                 donut: {
+                     labels: {
+                         name: { color: initialDark ? '#e5e7eb' : '#374151' },
+                         value: { color: initialDark ? '#9ca3af' : '#6b7280' },
+                         total: { color: initialDark ? '#9ca3af' : '#6b7280' }
+                     }
+                 }
+             }
+         },
+         // ... rest of options
+    };
+    const coreChart = new ApexCharts(document.querySelector("#coreAllocationChart"), coreAllocationOptions);
+    coreChart.render();
 
-    // Highlight implementation cards on chart hover
-    const coreChartElement = document.getElementById('coreAllocationChart');
-    // ... (keep existing chart hover logic) ...
+    // Growth Projection Chart & Controls
+    const inputMonthly = document.getElementById('input-monthly');
+    // ... keep input refs ...
+    let growthChart; // Declare here
 
-    // Scrollspy Functionality
-    const navLinksDesktop = document.querySelectorAll('nav .hidden.md\:flex a[href^="#"]');
-    const navLinksMobile = document.querySelectorAll('#mobile-menu a[href^="#"]');
-    const allNavLinks = [...navLinksDesktop, ...navLinksMobile];
-
-    const sections = Array.from(navLinksDesktop).map(link => { // Use desktop links to map sections
-        const sectionId = link.getAttribute('href');
-        try {
-            // Ensure the selector is valid and the element exists
-            if (sectionId && sectionId.startsWith('#') && sectionId.length > 1) {
-                 return document.querySelector(sectionId);
-            }
-            console.warn(`Scrollspy: Invalid or missing href attribute on link: ${link}`);
-            return null;
-        } catch (e) {
-            console.warn(`Scrollspy: Could not find section for ID: ${sectionId}, Error: ${e.message}`);
-            return null;
-        }
-    }).filter(section => section !== null); // Filter out nulls
-
-    let navHeight = 64; // Default height (h-16)
-    const navElement = document.querySelector('nav.sticky');
-    if (navElement) {
-        navHeight = navElement.offsetHeight;
+    function calculateGrowth(initial, monthly, years, rate) {
+        // ... existing function ...
     }
 
-    const activateLink = (targetId) => {
-        allNavLinks.forEach(navLink => {
-            navLink.classList.remove('nav-active');
-            // Restore default styles (adjust if your defaults are different)
-            navLink.classList.remove('font-semibold'); // Added by nav-active
-            navLink.classList.add('text-gray-600', 'dark:text-gray-400'); // Desktop defaults
-             if (navLink.closest('#mobile-menu')) { // Mobile specific defaults
-                 navLink.classList.remove('text-gray-600', 'dark:text-gray-400');
-                 navLink.classList.add('text-gray-700', 'dark:text-gray-300');
-             }
-        });
+    function updateGrowthChart() {
+        // ... existing function ...
+         // Make sure this function uses the growthChart variable declared above
+         if (growthChart) {
+            growthChart.updateSeries([{ data: newGrowthData }]);
+          }
+    }
 
-        if (targetId) {
-            allNavLinks.forEach(link => {
-                if (link.getAttribute('href') === `#${targetId}`) {
-                    link.classList.add('nav-active');
-                    // Remove default styles when active
-                    link.classList.remove('text-gray-600', 'dark:text-gray-400', 'text-gray-700', 'dark:text-gray-300');
-                }
-            });
-        }
+    const initialMonthly = parseFloat(inputMonthly.value);
+    // ... rest of growth calc setup ...
+    const growthOptions = {
+       // ... existing options ...
+        chart: { /*...,*/ background: 'transparent' },
+        theme: { mode: initialDark ? 'dark' : 'light' }, // Set initial theme object
+        tooltip: { theme: initialDark ? 'dark' : 'light' },
+        xaxis: {
+            title: { style: { color: initialDark ? '#9ca3af' : '#6b7280' } },
+            labels: { style: { colors: initialDark ? '#9ca3af' : '#6b7280' } }
+        },
+        yaxis: {
+            title: { style: { color: initialDark ? '#9ca3af' : '#6b7280' } },
+            labels: { style: { colors: initialDark ? '#9ca3af' : '#6b7280' } }
+        },
+        grid: { borderColor: initialDark ? '#374151' : '#e5e7eb' }, // Initial grid color
+        // ... rest of options
     };
+    // Assign to the growthChart variable declared earlier
+    growthChart = new ApexCharts(document.querySelector("#growthChart"), growthOptions);
+    growthChart.render();
 
-    const onScroll = () => {
-        let currentSectionId = null;
-        // Add extra offset to trigger highlight slightly before section top reaches nav
-        const scrollPosition = window.scrollY + navHeight + 20;
+    // Add event listeners for growth chart updates
+    inputMonthly.addEventListener('input', updateGrowthChart);
+    inputRate.addEventListener('input', updateGrowthChart);
+    inputYears.addEventListener('input', updateGrowthChart);
+    rateValueSpan.textContent = `${parseFloat(inputRate.value).toFixed(1)}%`; // Initial rate display
 
-        for (let i = sections.length - 1; i >= 0; i--) {
-            const section = sections[i];
-            if (section.offsetTop <= scrollPosition) {
-                currentSectionId = section.getAttribute('id');
-                break; // Found the current or last section above the scroll position
-            }
-        }
+    // --- Implementation Card Highlighting Logic ---
+    const implementationCardMap = { 0: 'impl-card-global', 1: 'impl-card-europe', 2: 'impl-card-em' };
+    function highlightImplementationCard(seriesIndex, shouldHighlight) {
+       // ... existing logic ...
+    }
+     // Attach hover listeners for core chart (needs coreChart variable)
+     if (coreChart) {
+         const coreChartElement = document.querySelector("#coreAllocationChart");
+         // Assuming events are handled within chart options now, but if not:
+         // coreChartElement.addEventListener('dataPointMouseEnter', ...) etc.
+     }
 
-        // Special case for the very top of the page
-        if (window.scrollY < sections[0]?.offsetTop - navHeight - 20) {
-             currentSectionId = null; // No section active if above the first one
-        }
 
-        // Special case for the bottom of the page
-         if (window.innerHeight + Math.ceil(window.scrollY) >= document.body.offsetHeight - 5) { // Use ceil for precision
-             currentSectionId = sections[sections.length - 1]?.getAttribute('id');
-         }
+    // --- Sparer-Pauschbetrag Calculator Logic --- (Ensure elements are selected within DOMContentLoaded)
+    const inputGains = document.getElementById('input-gains');
+    const coveredAmountSpan = document.getElementById('covered-amount');
+    const taxableAmountSpan = document.getElementById('taxable-amount');
+    const pauschbetrag = 1000;
+    function updateTaxCalculation() {
+        // ... existing logic ...
+    }
+    inputGains?.addEventListener('input', updateTaxCalculation); // Use optional chaining
+    updateTaxCalculation(); // Initial calculation
 
-        activateLink(currentSectionId);
-    };
 
-    window.addEventListener('scroll', onScroll, { passive: true }); // Use passive listener for performance
-    onScroll(); // Initial check on page load
+    // Scrollspy Functionality
+    // ... (keep existing scrollspy logic) ...
 
     // Set current year in footer
     const currentYearSpan = document.getElementById('currentYear');
     if (currentYearSpan) {
         currentYearSpan.textContent = new Date().getFullYear();
     }
-}); 
+
+    // --- IMPORTANT: Re-Define Chart Variables for Global Scope Access ---
+    // If applyTheme needs to access charts, ensure they are accessible.
+    // One way is to attach them to the window object (use cautiously)
+     window.coreChart = coreChart;
+     window.growthChart = growthChart;
+     // Now modify the check in applyTheme to use window.monthlyGauge etc.
+     // function applyTheme(isDark) { ... if (typeof window.monthlyGauge !== 'undefined' && window.monthlyGauge !== null) { ... } }
+
+    // Add event listener to clear highlights when clicking outside the chart area
+    document.addEventListener('click', function(event) {
+        const coreChartElement = document.querySelector("#coreAllocationChart");
+        // Check if the click was outside the chart element and not on a slice
+        if (coreChartElement && !coreChartElement.contains(event.target)) {
+            // Check if the click target is NOT part of the chart slices/legend/etc.
+            // This simple check works if clicks *inside* the chart trigger dataPointSelection.
+            // A more robust check might involve inspecting event.target's parentage.
+            clearCoreHighlights();
+        }
+    });
+
+}); // End of DOMContentLoaded
+
+// --- Ensure these functions are defined globally if needed by inline handlers or other scripts ---
+// function calculateGrowth(...) { ... } // Keep global if needed elsewhere
+// function updateGrowthChart(...) { ... } // Keep global if needed elsewhere
+// function highlightImplementationCard(...) { ... } // Keep global if needed elsewhere
+// function updateTaxCalculation(...) { ... } // Keep global if needed elsewhere
+// function applyTheme(...) { ... } // Keep global
+// function updateChartThemes(...) { ... } // Keep global
+// function toggleDarkMode(...) { ... } // Keep global
+
+// --- Scrollspy Navigation Highlighting ---
+const navLinks = document.querySelectorAll('nav a[href^="#"]:not([href="#"])'); // Select links starting with #, excluding href="#"
+const sections = Array.from(navLinks).map(link => {
+  try {
+    // Use querySelector which is more forgiving than getElementById if ID contains invalid characters
+    // Though in this case, IDs seem standard
+    return document.querySelector(link.getAttribute('href'));
+  } catch (e) {
+    console.warn(`Scrollspy target not found for link: ${link.getAttribute('href')}`, e);
+    return null;
+  }
+}).filter(section => section !== null); // Filter out nulls if any section wasn't found
+
+function updateScrollspy() {
+  const scrollPosition = window.scrollY;
+  // Get nav height dynamically or use a fixed value that matches scroll-mt-*
+  // Tailwind's mt-16 is 4rem (64px). Add a little buffer.
+  const navHeight = 70; // Adjust if nav height changes significantly
+
+  let activeSectionId = null;
+
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop - navHeight; // Adjust for sticky nav
+    const sectionBottom = sectionTop + section.offsetHeight;
+
+    // Check if section is in view
+    // Prioritize the section whose top edge has passed the nav bar
+    if (scrollPosition >= sectionTop) {
+        activeSectionId = section.id;
+    }
+  });
+
+    // Special case for bottom of page: if scrolled near the end, activate the last section
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) { // 50px buffer
+        if (sections.length > 0) {
+          activeSectionId = sections[sections.length - 1].id;
+        }
+    }
+    // Special case for top of page
+    else if (scrollPosition < sections[0].offsetTop - navHeight) {
+        activeSectionId = null; // Or set to overview if preferred when at the very top
+    }
+
+
+  navLinks.forEach(link => {
+    const linkHref = link.getAttribute('href');
+    if (linkHref === `#${activeSectionId}`) {
+      link.classList.add('nav-active');
+    } else {
+      link.classList.remove('nav-active');
+    }
+  });
+}
+
+// Debounce scroll events for performance
+let scrollTimeout;
+window.addEventListener('scroll', () => {
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(updateScrollspy, 50); // Run update 50ms after the last scroll event
+});
+
+// Initial call to set the state on load
+document.addEventListener('DOMContentLoaded', updateScrollspy);
+// Also call after charts/dynamic content might affect layout
+window.addEventListener('load', updateScrollspy); // Ensure layout is fully stable

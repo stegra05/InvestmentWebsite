@@ -33,7 +33,23 @@ input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; hei
 input[type=range]:hover { opacity: 1; }
 input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; background: #4f46e5; border-radius: 50%; cursor: pointer; }
 input[type=range]::-moz-range-thumb { width: 20px; height: 20px; background: #4f46e5; border-radius: 50%; cursor: pointer; border: none; }
-.highlight-card { border-color: #4f46e5 !important; box-shadow: 0 0 0 3px #c7d2fe; background-color: #f0f2ff; transition: all 0.2s ease-in-out; transform: translateY(-2px); }
+
+/* Styles for the highlighted implementation card (used by JS) */
+.highlight-card {
+    border-color: #6366f1 !important; /* Indigo-500 - added !important for potential override */
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); /* Indigo shadow */
+    /* background-color: #f0f2ff; /* Optional: Decide if background change is desired */
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.03); /* Use scale instead of translateY */
+}
+
+/* Dark mode styles for the highlighted card */
+.dark .highlight-card {
+    border-color: #818cf8 !important; /* Indigo-400 */
+    box-shadow: 0 4px 20px rgba(129, 140, 248, 0.4); /* Indigo-400 shadow */
+    /* background-color: #374151; /* Optional dark background */
+}
+
 .implementation-card { display: flex; flex-direction: column; justify-content: space-between; min-height: 180px; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
 
 /* Hover effect for implementation cards */
@@ -77,18 +93,33 @@ a:hover, a:active {
    transition-property: transform, opacity;
  }
 
-.implementation-card.highlight {
-    transform: scale(1.03);
-    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); /* Indigo shadow */
-    border-color: #6366f1; /* Indigo-500 */
+/* Navigation Bar Styling */
+nav a.nav-link {
+    @apply px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors duration-150 ease-in-out;
 }
 
-.dark .implementation-card.highlight {
-    box-shadow: 0 4px 20px rgba(129, 140, 248, 0.4); /* Indigo-400 shadow */
-    border-color: #818cf8; /* Indigo-400 */
+/* Mobile Navigation Links */
+#mobile-menu a {
+    @apply block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-white transition-colors duration-150 ease-in-out;
 }
 
 /* Scrollspy Active Link Style */
 .nav-active {
-    @apply text-indigo-600 dark:text-indigo-400 font-semibold;
+    /* Combined base and active styles */
+    @apply px-3 py-2 rounded-md text-sm font-semibold bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300;
+}
+
+/* Active style specific for mobile */
+#mobile-menu a.nav-active {
+    @apply block px-3 py-2 rounded-md text-base font-semibold bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300;
+}
+
+/* Details/Summary Chevron Animation */
+details summary .lucide-chevron {
+  transition: transform 0.2s ease-in-out;
+  /* Ensure chevron is vertically aligned if needed */
+  vertical-align: middle;
+}
+details[open] summary .lucide-chevron {
+  transform: rotate(90deg);
 }
