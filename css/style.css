@@ -1,0 +1,94 @@
+@font-face {
+  font-family: 'LucideIcons';
+  src: url(https://cdn.jsdelivr.net/npm/lucide-static@latest/font/Lucide.ttf) format('truetype');
+}
+body {
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+}
+.lucide {
+  font-family: 'LucideIcons';
+  font-size: 1.1rem; line-height: 1; vertical-align: middle;
+  margin-right: 0.35rem; display: inline-block; color: inherit;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.lucide-link { font-size: 0.9rem; margin-left: 0.15rem; color: #6b7280; }
+.lucide-card-icon { font-size: 1.25rem; margin-right: 0.5rem; color: #4f46e5; }
+.lucide-card-icon.rose { color: #be123c; }
+.lucide-opps { color: #15803d; }
+.lucide-risks { color: #b91c1c; }
+
+html { scroll-behavior: smooth; }
+#mobile-menu { transition: transform 0.3s ease-out, opacity 0.3s ease-out; }
+#mobile-menu.hidden { transform: translateY(-10px); opacity: 0; pointer-events: none; }
+.apexcharts-datalabel-label, .apexcharts-datalabel-value { font-size: 12px !important; }
+.apexcharts-radialbar-label { font-weight: 600; font-size: 14px !important; color: #374151; }
+.apexcharts-radialbar-value { font-size: 18px !important; font-weight: 700; color: #1f2937; }
+input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 8px; background: #d1d5db; border-radius: 5px; outline: none; opacity: 0.7; transition: opacity .2s; }
+input[type=range]:hover { opacity: 1; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 20px; height: 20px; background: #4f46e5; border-radius: 50%; cursor: pointer; }
+input[type=range]::-moz-range-thumb { width: 20px; height: 20px; background: #4f46e5; border-radius: 50%; cursor: pointer; border: none; }
+.highlight-card { border-color: #4f46e5 !important; box-shadow: 0 0 0 3px #c7d2fe; background-color: #f0f2ff; transition: all 0.2s ease-in-out; transform: translateY(-2px); }
+.implementation-card { display: flex; flex-direction: column; justify-content: space-between; min-height: 180px; transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; }
+
+/* Hover effect for implementation cards */
+.implementation-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* Basic button styles */
+button, .button { /* Added .button class as a common alternative */
+  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  cursor: pointer; /* Ensure pointer cursor */
+}
+
+/* Button hover/focus effects */
+button:hover, .button:hover,
+button:focus, .button:focus {
+  transform: scale(1.05);
+  /* Assuming a default button color or using filter for generic effect */
+  filter: brightness(95%);
+  outline: none; /* Optional: Remove default focus outline if providing custom style */
+}
+
+/* Basic link styles */
+a {
+  transition: color 0.2s ease-in-out, text-decoration-color 0.2s ease-in-out;
+  text-decoration-color: transparent; /* Start with transparent underline */
+}
+
+/* Link hover/active effects */
+a:hover, a:active {
+  /* Example: Slightly darker color or primary color */
+  color: #4f46e5;
+  text-decoration: underline;
+  text-decoration-color: #4f46e5; /* Make underline visible */
+}
+
+/* Ensure elements are hidden initially for AOS */
+[data-aos] {
+   opacity: 0;
+   transition-property: transform, opacity;
+ }
+
+.implementation-card.highlight {
+    transform: scale(1.03);
+    box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3); /* Indigo shadow */
+    border-color: #6366f1; /* Indigo-500 */
+}
+
+.dark .implementation-card.highlight {
+    box-shadow: 0 4px 20px rgba(129, 140, 248, 0.4); /* Indigo-400 shadow */
+    border-color: #818cf8; /* Indigo-400 */
+}
+
+/* Scrollspy Active Link Style */
+.nav-active {
+    @apply text-indigo-600 dark:text-indigo-400 font-semibold;
+}
