@@ -56,6 +56,7 @@
 
         <section id="overview" class="mb-16 scroll-mt-16">
              <h1 class="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4" data-aos="fade-up">Your Long-Term Investment Plan</h1>
+             <p class="text-xs text-gray-500 dark:text-gray-400 mb-2" data-aos="fade-up" data-aos-delay="50">Last Reviewed: <span class="font-semibold">[Manually Update Date Here]</span></p>
              <p class="text-lg text-gray-600 dark:text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="100">A structured approach for Steffen, aiming for capital growth over 20+ years with controlled risk, investing €600 per month.</p>
              <div id="overview-dashboard" class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
                  <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow border border-gray-200 dark:border-gray-700 text-center flex flex-col justify-start items-center" data-aos="fade-up" data-aos-delay="200"> <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-2">Monthly Investment</h3> <div id="monthlyInvestmentGauge" class="w-full h-[140px]"></div> </div>
@@ -133,13 +134,71 @@
                       </div>
                  </div>
              </div>
+             
+             <!-- Added Broker Choice Section -->
+             <div class="mt-8 p-4 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-700/50 rounded-lg" data-aos="fade-up">
+                 <h4 class="font-semibold text-lg text-blue-800 dark:text-blue-300 mb-3 flex items-center">
+                     <span class="lucide mr-2" style="font-size: 1.1rem;">&#xea4c;</span> Choosing Your Broker
+                 </h4>
+                 <p class="text-sm text-blue-700 dark:text-blue-400 mb-3">Selecting the right broker is crucial for efficient implementation. Key factors for German investors include:</p>
+                 <ul class="list-disc list-inside space-y-1 text-sm text-blue-700 dark:text-blue-400 pl-4">
+                     <li><strong>Low-cost Sparpläne:</strong> Availability and fees for automated ETF/Stock savings plans.</li>
+                     <li><strong>Asset Availability:</strong> Ensure the broker offers the specific ETFs and stocks you plan to invest in.</li>
+                     <li><strong>User Interface:</strong> Ease of use of the web platform and mobile app.</li>
+                     <li><strong>Security:</strong> Features like two-factor authentication (2FA) and deposit protection schemes.</li>
+                     <li><strong>Tax Reporting:</strong> Simplified tax handling, ideally with automatic generation of the German tax certificate (<em>Steuerbescheinigung</em>).</li>
+                 </ul>
+                 <p class="text-xs text-blue-600 dark:text-blue-500 mt-3">Popular brokers in Germany include names like Scalable Capital, Trade Republic, ING, Consorsbank, and others. Compare their current conditions and features.</p>
+             </div>
+             <!-- End Added Broker Choice Section -->
+
               <p class="text-sm text-gray-600 dark:text-gray-400 mt-6" data-aos="fade-up">Use a broker offering Sparpläne (savings plans) for automated monthly investments, often available for ETFs and major stocks (e.g., Scalable Capital, Trade Republic in Germany).</p>
          </section>
+
+         <!-- Added Tracking Your Portfolio Section -->
+         <section id="tracking" class="mb-16 scroll-mt-16" data-aos="fade-up">
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-6 border-b pb-2 border-gray-300 dark:border-gray-600">Tracking Your Portfolio</h2>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow border border-gray-200 dark:border-gray-700">
+                <h3 class="text-xl font-semibold mb-3 text-indigo-700 dark:text-indigo-400 flex items-center">
+                    <span class="lucide mr-2" style="font-size: 1.1rem;">&#xe9c4;</span> Keep an Eye on Your Investments
+                </h3>
+                <div class="text-gray-700 dark:text-gray-300 space-y-4 text-sm">
+                    <p>Regularly monitoring your portfolio is crucial to ensure it stays aligned with your goals and risk tolerance. Check its performance and allocation at least annually, or more often if market conditions change significantly.</p>
+                    <p><strong>Common ways to track:</strong></p>
+                    <ul class="list-disc list-inside space-y-1 pl-4">
+                        <li><strong>Broker Interface:</strong> Most online brokers provide tools to view your portfolio's value, performance, and holdings.</li>
+                        <li><strong>Portfolio Tracking Apps:</strong> Dedicated apps (e.g., Parqet, Portfolio Performance, getquin) offer more detailed analysis, aggregation across brokers, and performance metrics.</li>
+                        <li><strong>Spreadsheets:</strong> A personal spreadsheet (like Google Sheets or Excel) allows for maximum customization and control over how you track your investments.</li>
+                    </ul>
+                    <!-- Optional: Add link to a template if created
+                    <p class="mt-4 text-xs">You can use this <a href="#" class="text-indigo-600 hover:text-indigo-800">simple Google Sheets template</a> to get started.</p>
+                    -->
+                </div>
+            </div>
+         </section>
+         <!-- End Tracking Your Portfolio Section -->
 
          <section id="long-term" class="mb-16 scroll-mt-16" data-aos="fade-up">
              <h2 class="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-6 border-b pb-2 border-gray-300 dark:border-gray-600">Long-Term View & Discipline</h2>
              <div class="bg-gradient-to-r from-teal-50 to-cyan-50 dark:from-teal-900/30 dark:to-cyan-900/30 p-8 rounded-lg shadow dark:shadow-gray-700"> <div class="grid md:grid-cols-2 gap-8"> <div> <h3 class="text-xl font-semibold mb-3 text-teal-700 dark:text-teal-400 flex items-center"><span class="lucide mr-2" style="font-size: 1.25rem;">&#xe907;</span> Compounding & Consistency</h3> <p class="text-gray-700 dark:text-gray-300 mb-4">Consistent €600 monthly investments (dollar-cost averaging) combined with long-term compounding of reinvested earnings drives potential portfolio growth. Staying invested through market cycles is key.</p> </div> <div> <h3 class="text-xl font-semibold mb-3 text-cyan-700 dark:text-cyan-400 flex items-center"><span class="lucide mr-2" style="font-size: 1.25rem;">&#xea0c;</span> 5-Year Review & Rebalancing</h3> <p class="text-gray-700 dark:text-gray-300 mb-4">Review your plan around the 5-year mark:</p> <ul class="list-disc list-inside space-y-1 text-gray-700 dark:text-gray-300 text-sm"> <li>Assess risk tolerance & goals.</li> <li>Rebalance if allocations drift significantly.</li> <li>Check fund competitiveness (fees, etc.).</li> <li>Adjust for major life/economic shifts.</li> </ul> <p class="text-gray-700 dark:text-gray-300 mt-4 text-sm">Regular rebalancing maintains your risk profile.</p> </div> </div> </div>
          </section>
+
+         <!-- Added Revision History Section -->
+         <section id="revision-history" class="mb-8 scroll-mt-16" data-aos="fade-up">
+            <details class="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-sm">
+                <summary class="px-4 py-3 cursor-pointer text-sm font-semibold text-gray-700 dark:text-gray-300 flex justify-between items-center">
+                    <span>Revision History</span>
+                    <span class="lucide lucide-chevron text-gray-500 dark:text-gray-400" style="font-size: 1rem;">&#xe902;</span> </summary>
+                <div class="border-t border-gray-200 dark:border-gray-700 px-4 py-4">
+                    <ul class="list-disc list-inside space-y-2 text-xs text-gray-600 dark:text-gray-400">
+                        <li><strong>[Initial Date - e.g., May 2024]:</strong> Initial Plan Setup & First Version.</li>
+                        <!-- Add new revisions here as needed, e.g.: -->
+                        <!-- <li><strong>[Date]:</strong> [Brief description of change, e.g., Increased monthly savings to €700].</li> -->
+                    </ul>
+                </div>
+            </details>
+         </section>
+         <!-- End Revision History Section -->
 
          <footer class="text-center mt-12 pt-8 border-t border-gray-300 dark:border-gray-700" data-aos="fade-up">
              <p class="text-sm text-gray-500 dark:text-gray-400">&copy; <span id="currentYear"></span> Investment Plan Overview. Information purposes only.</p>
